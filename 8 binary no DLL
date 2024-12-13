@@ -1,0 +1,107 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node *prev, *next;
+};
+
+Node *createNode(int data) {
+    Node *newNode = new Node;
+    newNode->data = data;
+    newNode->prev = newNode->next = NULL;
+    return newNode;
+}
+
+void insertAtBeginning(Node **head, int data) {
+    Node *newNode = createNode(data);
+    if (*head == NULL) {
+        *head = newNode;
+        return;
+    }
+    newNode->next = *head;
+    (*head)->prev = newNode;
+    *head = newNode;
+}
+
+void printList(Node *head) {
+    while (head != NULL) {
+        cout << head->data;
+        head = head->next;
+    }
+    cout << endl;
+}
+
+void onesComplement(Node *head) {
+    while (head != NULL) {
+        head->data = (head->data == 0) ? 1 : 0;
+        head = head->next;
+    }
+}
+
+void twosComplement(Node *head) {
+    onesComplement(head);
+    Node *temp = head;
+
+    // Move to the last node
+    while (temp->next != NULL) {
+        temp = temp->next;
+    }
+
+    // Add 1 to the binary number
+    while (temp != head && temp->data == 0) {
+        temp->data = 1;
+        temp = temp->prev;
+    }
+
+    if (temp == head && temp->data == 0) {
+        temp->data = 1;
+    }
+}
+
+Node *addBinaryNumbers(Node *head1, Node *head2, int &carry) {
+    Node *result = NULL;
+
+    while (head1 != NULL || head2 != NULL || carry != 0) {
+        int sum = (head1 ? head1->data : 0) + (head2 ? head2->data : 0) + carry;
+        carry = sum / 2;
+        insertAtBeginning(&result, sum % 2);
+        if (head1) head1 = head1->next;
+        if (head2) head2 = head2->next;
+    }
+
+    return result;
+}
+
+int main() {
+    Node *head1 = NULL, *head2 = NULL;
+    int num1, num2, carry = 0;
+
+    cout << "Enter the first binary number: ";
+    cin >> num1;
+    while (num1 != 0) {
+        insertAtBeginning(&head1, num1 % 2);
+        num1 /= 2;
+    }
+
+    cout << "Enter the second binary number: ";
+    cin >> num2;
+    while (num2 != 0) {
+        insertAtBeginning(&head2, num2 % 2);
+        num2 /= 2;
+    }
+
+    cout << "1's complement of the first number: ";
+    onesComplement(head1);
+    printList(head1);
+
+    cout << "2's complement of the first number: ";
+    twosComplement(head1);
+    printList(head1);
+
+    Node *result = addBinaryNumbers(head1, head2, carry);
+    cout << "Sum of the two binary numbers: ";
+    printList(result);
+
+    return 0;
+}
