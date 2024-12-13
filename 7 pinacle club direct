@@ -1,0 +1,81 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+struct Node {
+    string prn;
+    string name;
+    Node* next;
+};
+
+class PinnacleClub {
+private:
+    Node* head;
+
+public:
+    PinnacleClub() : head(nullptr) {}
+
+    // Add a member
+    void addMember(const string& prn, const string& name) {
+        Node* newNode = new Node{prn, name, head};
+        head = newNode;
+    }
+
+    // Delete a member by PRN
+    void deleteMember(const string& prn) {
+        Node* current = head;
+        Node* previous = nullptr;
+
+        while (current) {
+            if (current->prn == prn) {
+                if (previous) {
+                    previous->next = current->next;
+                } else {
+                    head = current->next; // Deleting head
+                }
+                delete current;
+                return;
+            }
+            previous = current;
+            current = current->next;
+        }
+
+        cout << "Member with PRN " << prn << " not found." << endl;
+    }
+
+    // Display members
+    void displayMembers() const {
+        cout << "Members of Pinnacle Club:" << endl;
+        for (Node* current = head; current; current = current->next) {
+            cout << "PRN: " << current->prn << ", Name: " << current->name << endl;
+        }
+    }
+
+    // Clean up all nodes
+    void cleanup() {
+        while (head) {
+            Node* temp = head;
+            head = head->next;
+            delete temp;
+        }
+    }
+};
+
+int main() {
+    PinnacleClub club;
+
+    club.addMember("PRN001", "Alice");
+    club.addMember("PRN002", "Bob");
+
+    club.displayMembers();
+
+    club.deleteMember("PRN002");
+
+    cout << "After deleting PRN002:" << endl;
+    club.displayMembers();
+
+    // Clean up members before exiting
+    club.cleanup();
+
+    return 0;
+}
