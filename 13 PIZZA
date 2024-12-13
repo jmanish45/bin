@@ -1,0 +1,108 @@
+#include <iostream>
+#define MAX 5 // Maximum number of orders (M)
+using namespace std;
+
+class CircularQueue {
+private:
+    int front, rear;
+    int orders[MAX]; // Array to hold orders
+    int size; // Current size of the queue
+public:
+    CircularQueue() {
+        front = -1;
+        rear = -1;
+        size = 0;
+    }
+
+    // Function to check if the queue is full
+    bool isFull() {
+        return (size == MAX);
+    }
+
+    // Function to check if the queue is empty
+    bool isEmpty() {
+        return (size == 0);
+    }
+
+    // Function to add an order to the circular queue
+    void placeOrder(int order) {
+        if (isFull()) {
+            cout << "Cannot place order " << order << ". The pizza parlor is at full capacity." << endl;
+            return;
+        }
+        if (front == -1) { // First order
+            front = 0;
+        }
+        rear = (rear + 1) % MAX; // Circular increment of rear
+        orders[rear] = order;
+        size++;
+        cout << "Order " << order << " placed successfully." << endl;
+    }
+
+    // Function to serve (delete) an order from the circular queue
+    void serveOrder() {
+        if (isEmpty()) {
+            cout << "No orders to serve." << endl;
+            return;
+        }
+        cout << "Order " << orders[front] << " is served." << endl;
+        front = (front + 1) % MAX; // Circular increment of front
+        size--;
+        if (size == 0) { // Reset queue when all orders are served
+            front = -1;
+            rear = -1;
+        }
+    }
+
+    // Function to display the current orders in the circular queue
+    void displayOrders() {
+        if (isEmpty()) {
+            cout << "No orders in the queue." << endl;
+            return;
+        }
+        cout << "Current orders in the queue: ";
+        int i = front;
+        for (int count = 0; count < size; count++) {
+            cout << orders[i];
+            if (count < size - 1) {
+                cout << " "; // Space between orders, but not after the last order
+            }
+            i = (i + 1) % MAX; // Circular increment
+        }
+        cout << endl;
+    }
+};
+
+int main() {
+    CircularQueue pizzaParlor;
+    int choice, order;
+    do {
+        cout << "\nPizza Parlor Menu:\n";
+        cout << "1. Place an Order\n";
+        cout << "2. Serve an Order\n";
+        cout << "3. Display Orders\n";
+        cout << "4. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+        
+        switch (choice) {
+            case 1:
+                cout << "Enter the order number to place: ";
+                cin >> order;
+                pizzaParlor.placeOrder(order);
+                break;
+            case 2:
+                pizzaParlor.serveOrder();
+                break;
+            case 3:
+                pizzaParlor.displayOrders();
+                break;
+            case 4:
+                cout << "Exiting program." << endl;
+                break;
+            default:
+                cout << "Invalid choice! Please try again." << endl;
+        }
+    } while (choice != 4);
+    return 0;
+}
