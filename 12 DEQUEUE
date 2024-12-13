@@ -1,0 +1,92 @@
+#include <iostream>
+#include <deque>
+using namespace std;
+
+// Function to add an element at the front of the deque
+void addFront(deque<int> &dq, int element) {
+    dq.push_front(element);
+    cout << "Element " << element << " added to the front of the deque." << endl;
+}
+
+// Function to add an element at the back of the deque
+void addBack(deque<int> &dq, int element) {
+    dq.push_back(element);
+    cout << "Element " << element << " added to the back of the deque." << endl;
+}
+
+// Function to delete an element from the front of the deque
+void deleteFront(deque<int> &dq) {
+    if (dq.empty()) {
+        cout << "Deque is empty, cannot delete from front." << endl;
+    } else {
+        cout << "Element " << dq.front() << " deleted from the front of the deque." << endl;
+        dq.pop_front();
+    }
+}
+
+// Function to delete an element from the back of the deque
+void deleteBack(deque<int> &dq) {
+    if (dq.empty()) {
+        cout << "Deque is empty, cannot delete from back." << endl;
+    } else {
+        cout << "Element " << dq.back() << " deleted from the back of the deque." << endl;
+        dq.pop_back();
+    }
+}
+
+// Function to display the current state of the deque
+void displayDeque(const deque<int> &dq) {
+    if (dq.empty()) {
+        cout << "Deque is empty." << endl;
+    } else {
+        cout << "Current deque: ";
+        for (int element : dq) {
+            cout << element << " ";
+        }
+        cout << endl;
+    }
+}
+
+int main() {
+    deque<int> dq;
+    int choice, element;
+    do {
+        cout << "\nDeque Menu:\n";
+        cout << "1. Add an Element to the Front\n";
+        cout << "2. Add an Element to the Back\n";
+        cout << "3. Delete an Element from the Front\n";
+        cout << "4. Delete an Element from the Back\n";
+        cout << "5. Display the Deque\n";
+        cout << "6. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+        
+        switch (choice) {
+            case 1:
+                cout << "Enter the element to add to the front: ";
+                cin >> element;
+                addFront(dq, element);
+                break;
+            case 2:
+                cout << "Enter the element to add to the back: ";
+                cin >> element;
+                addBack(dq, element);
+                break;
+            case 3:
+                deleteFront(dq);
+                break;
+            case 4:
+                deleteBack(dq);
+                break;
+            case 5:
+                displayDeque(dq);
+                break;
+            case 6:
+                cout << "Exiting program." << endl;
+                break;
+            default:
+                cout << "Invalid choice! Please try again." << endl;
+        }
+    } while (choice != 6);
+    return 0;
+}
