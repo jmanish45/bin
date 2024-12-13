@@ -1,44 +1,56 @@
-Addition of matrix:
-row = int(input("Enter the no of rows : "))
-col = int(input("Enter no of columns : "))
+# Addition of matrices
+row = int(input("Enter the number of rows: "))
+col = int(input("Enter the number of columns: "))
+
 m1 = [[0 for i in range(col)] for i in range(row)]
 m2 = [[0 for i in range(col)] for i in range(row)]
 ans = [[0 for i in range(col)] for i in range(row)]
+
 for n in range(2):
-print(f"enter data for matrix {n+1} :")
+    print(f"Enter data for matrix {n + 1}:")
+    for i in range(row):
+        for j in range(col):
+            if n == 0:
+                m1[i][j] = int(input(f"Enter data for row {i + 1} and column {j + 1}: "))
+            else:
+                m2[i][j] = int(input(f"Enter data for row {i + 1} and column {j + 1}: "))
+
 for i in range(row):
-for j in range(col):
-if n==0:
-m1[i][j] = int(input(f"Enter data for row {i+1} and column {j+1} : "))
-else :
-m2[i][j] = int(input(f"Enter data for row {i+1} and column {j+1} : "))
-for i in range(row):
-for j in range(col):
-ans[i][j]=m1[i][j]+m2[i][j]
-print(ans)
-Multiplication of matrixes
+    for j in range(col):
+        ans[i][j] = m1[i][j] + m2[i][j]
+
+print("Resultant Matrix after Addition:")
+for row in ans:
+    print(row)
+
+# Multiplication of matrices
 row1 = int(input("Enter the number of rows for Matrix 1: "))
 col1 = int(input("Enter the number of columns for Matrix 1: "))
 row2 = int(input("Enter the number of rows for Matrix 2: "))
 col2 = int(input("Enter the number of columns for Matrix 2: "))
+
 if col1 != row2:
-print("Matrix multiplication not possible! Columns of Matrix 1 must equal rows of Matrix 2.")
+    print("Matrix multiplication not possible! Columns of Matrix 1 must equal rows of Matrix 2.")
 else:
-m1 = [[0 for _ in range(col1)] for _ in range(row1)]
-m2 = [[0 for _ in range(col2)] for _ in range(row2)]
-ans = [[0 for _ in range(col2)] for _ in range(row1)]
-print("Enter data for Matrix 1:")
-for i in range(row1):
-for j in range(col1):
-m1[i][j] = int(input(f"Enter data for row {i+1}, column {j+1}: "))
-print("Enter data for Matrix 2:")
-for i in range(row2):
-for j in range(col2):
-m2[i][j] = int(input(f"Enter data for row {i+1}, column {j+1}: "))
-for i in range(row1):
-for j in range(col2):
-for k in range(col1):
-ans[i][j] += m1[i][k] * m2[k][j]
-print("Resultant Matrix after Multiplication:")
-for row in ans:
-print(row)
+    m1 = [[0 for _ in range(col1)] for _ in range(row1)]
+    m2 = [[0 for _ in range(col2)] for _ in range(row2)]
+    ans = [[0 for _ in range(col2)] for _ in range(row1)]
+
+    print("Enter data for Matrix 1:")
+    for i in range(row1):
+        for j in range(col1):
+            m1[i][j] = int(input(f"Enter data for row {i + 1}, column {j + 1}: "))
+
+    print("Enter data for Matrix 2:")
+    for i in range(row2):
+        for j in range(col2):
+            m2[i][j] = int(input(f"Enter data for row {i + 1}, column {j + 1}: "))
+
+    for i in range(row1):
+        for j in range(col2):
+            for k in range(col1):
+                ans[i][j] += m1[i][k] * m2[k][j]
+
+    print("Resultant Matrix after Multiplication:")
+    for row in ans:
+        print(row)
