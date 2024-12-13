@@ -1,0 +1,147 @@
+#include <iostream>
+using namespace std;
+
+struct Node {
+    int data;
+    Node *prev, *next;
+};
+
+Node *createNode(int data) {
+    Node *newNode = new Node;
+    newNode->data = data;
+    newNode->prev = newNode->next = nullptr;
+    return newNode;
+}
+
+void insertAtBeginning(Node **head, int data) {
+    Node *newNode = createNode(data);
+    if (*head == nullptr) {
+        *head = newNode;
+        return;
+    }
+    newNode->next = *head;
+    (*head)->prev = newNode;
+    *head = newNode;
+}
+
+void printList(Node *head) {
+    while (head != nullptr) {
+        cout << head->data;
+        head = head->next;
+    }
+    cout << endl;
+}
+
+void onesComplement(Node *head) {
+    while (head != nullptr) {
+        head->data = (head->data == 0) ? 1 : 0;
+        head = head->next;
+    }
+}
+
+void twosComplement(Node **head) {
+    onesComplement(*head); // Compute 1's complement first
+    Node *current = *head;
+    int carry = 1; // Start with carry of 1
+
+    // Add carry to the least significant bit (LSB)
+    while (current != nullptr) {
+        int sum = current->data + carry;
+        if (sum == 2) {
+            current->data = 0; // Set current bit to 0
+            carry = 1; // Carry to the next bit
+        } else {
+            current->data = sum; // Set the current bit (0 or 1)
+            carry = 0; // No carry needed further
+        }
+        current = current->next;
+    }
+
+    // If carry is still left after the loop, add a new MSB
+    if (carry == 1) {
+        insertAtBeginning(head, 1);
+    }
+}
+
+Node *addBinaryNumbers(Node *head1, Node *head2, int &carry) {
+    Node *result = nullptr;
+
+    while (head1 != nullptr || head2 != nullptr || carry != 0) {
+        int sum = carry;
+        if (head1 != nullptr) {
+            sum += head1->data;
+            head1 = head1->next;
+        }
+        if (head2 != nullptr) {
+            sum += head2->data;
+            head2 = head2->next;
+        }
+        if (sum >= 2) {
+            carry = 1;
+            sum %= 2;
+        } else {
+            carry = 0;
+        }
+        insertAtBeginning(&result, sum);
+    }
+
+    return result;
+}
+
+void decimalToBinary(int num, Node **head) {
+    if (num == 0) {
+        insertAtBeginning(head, 0);
+        return;
+    }
+    while (num != 0) {
+        insertAtBeginning(head, num % 2);
+        num /= 2;
+    }
+}
+
+int main() {
+    Node *head1 = nullptr, *head2 = nullptr;
+    int num1, num2, carry = 0;
+
+    // 1. Take two numbers as input
+    cout << "Enter the first number: ";
+    cin >> num1;
+    cout << "Enter the second number: ";
+    cin >> num2;
+
+    // Convert both numbers to binary
+    decimalToBinary(num1, &head1);
+    decimalToBinary(num2, &head2);
+
+    // Print original binary numbers
+    cout << "Original first binary number: ";
+    printList(head1);
+    cout << "Original second binary number: ";
+    printList(head2);
+
+    // 2. Find one's complement of both numbers
+    cout << "1's complement of the first number: ";
+    onesComplement(head1);
+    printList(head1);
+    cout << "1's complement of the second number: ";
+    onesComplement(head2);
+    printList(head2);
+
+    // 3. Find two's complement of both numbers
+    cout << "2's complement of the first number: ";
+    twosComplement(&head1);
+    printList(head1);
+    cout << "2's complement of the second number: ";
+    twosComplement(&head2);
+    printList(head2);
+
+    // Reset carry for addition
+    carry = 0;
+
+    // 4. Find binary sum of the two numbers
+    Node *result = addBinaryNumbers(head1, head2, carry);
+    cout << "Sum of the two binary numbers: ";
+    printList(result);
+
+    return 0;
+}
