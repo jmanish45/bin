@@ -1,31 +1,35 @@
 marklist = []
-n = int (input("Enter number of students : "))
+n = int(input("Enter number of students : "))
 print()
-for i in range (n):
-marks = int (input(f'enter marks of student {i+1} : '))
-marklist.append(marks)
+for i in range(n):
+    marks = int(input(f'Enter marks of student {i+1} : '))
+    marklist.append(marks)
 print()
-print(f"The marklist of student is : {marklist}")
-#findinf avg
-sum = 0;
+
+print(f"The marklist of students is : {marklist}")
+
+# Finding average
+sum = 0
 for marks in marklist:
-sum+=marks
+    sum += marks
 print(f"The sum of marks is : {sum}")
-print(f"The avg marks of student is : {sum/n}" )
+print(f"The avg marks of students is : {sum / n}")
+
 highest = -999
 lowest = 999
-for marks in marklist :
-if marks < lowest:
-lowest = marks
-if marks > highest :
-highest = marks
+for marks in marklist:
+    if marks < lowest:
+        lowest = marks
+    if marks > highest:
+        highest = marks
 print(f"Highest marks scored is : {highest}")
-print(f"lowest marks scored is : {lowest}")
-#to find the frequency of marks repeated
+print(f"Lowest marks scored is : {lowest}")
+
+# To find the frequency of marks repeated
 freq = {}
-for marks in marklist :
-if marks in freq :
-freq[marks] +=1
-else:
-freq[marks] = 1
+for marks in marklist:
+    if marks in freq:
+        freq[marks] += 1
+    else:
+        freq[marks] = 1
 print(f"The frequency of marks is : {freq}")
