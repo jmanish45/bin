@@ -1,0 +1,28 @@
+def longest_word(s):
+words = s.split()
+return max(words, key=len)
+def char_freq(s, char):
+return s.count(char)
+def is_palindrome(s):
+return s == s[::-1]
+def first_substring_index(s, substring):
+return s.find(substring)
+def word_occurrences(s):
+words = s.split()
+word_count = {}
+for word in words:
+word = word.lower() # Convert to lowercase for case-insensitive comparison
+if word in word_count:
+word_count[word] += 1
+else:
+word_count[word] = 1
+return word_count # Corrected return statement (fixed syntax error)
+s = input("Enter a string: ")
+print("Longest Word:", longest_word(s))
+char = input("Enter a character to find its frequency: ")
+print("Character Frequency:", char_freq(s, char))
+print("Is Palindrome:", is_palindrome(s))
+substring = input("Enter a substring to find its first index: ")
+print("First Appearance Index:", first_substring_index(s, substring))
+word_count = word_occurrences(s)
+print("Word Occurrences:", word_count)
