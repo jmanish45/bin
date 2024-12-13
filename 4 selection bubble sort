@@ -1,0 +1,31 @@
+n = int(input("Enter the number of students: "))
+percentages = []
+print("Enter the percentages of students:")
+for i in range(n):
+percentage = float(input(f"Percentage of student {i + 1}: "))
+percentages.append(percentage)
+print("\nOriginal percentages:")
+for percentage in percentages:
+print(percentage, end=" ")
+selection_sorted = percentages.copy()
+for i in range(n):
+min_idx = i
+for j in range(i + 1, n):
+if selection_sorted[j] < selection_sorted[min_idx]:
+min_idx = j
+temp = selection_sorted[i]
+selection_sorted[i] = selection_sorted[min_idx]
+selection_sorted[min_idx] = temp
+print("\n\nTop 5 scores after Selection Sort:")
+for i in range(min(5, n)):
+print(selection_sorted[-(i + 1)], end=" ")
+bubble_sorted = percentages.copy()
+for i in range(n):
+for j in range(0, n - i - 1):
+if bubble_sorted[j] > bubble_sorted[j + 1]:
+temp = bubble_sorted[j]
+bubble_sorted[j] = bubble_sorted[j + 1]
+bubble_sorted[j + 1] = temp
+print("\n\nTop 5 scores after Bubble Sort:")
+for i in range(min(5, n)):
+print(bubble_sorted[-(i + 1)], end=" ")
