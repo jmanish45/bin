@@ -1,0 +1,157 @@
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+class studdata;
+
+class student {
+    string name, Class, dob;
+    int roll_no;
+    string div;  
+    string bloodgroup;  
+    static int count;
+
+public:
+    
+    student() {
+        name = " ";
+        roll_no = 0;
+        Class = " ";
+        div = "";
+        dob = "";
+        bloodgroup = "";
+    }
+
+    
+    ~student() {
+        
+    }
+
+    
+    static int getcount() {
+        return count;
+    }
+
+    
+    void getdata(studdata* st);
+    void displaydata(studdata* st1);
+};
+
+
+int student::count = 0;
+
+class studdata {
+    string address;
+    long telno;
+    long drivinglicense;
+    friend class student; 
+
+public:
+    
+    studdata() {
+        address = " ";
+        telno = 0;
+        drivinglicense = 0;
+    }
+
+   
+    ~studdata() {
+       
+    }
+
+    
+    void getstuddata() {
+        cout << "Enter Address of student: ";
+        cin.ignore();  
+        getline(cin, address);  
+        cout << "Enter telephone no. of the student: ";
+        cin >> telno;
+        cout << "Enter driving license no. of student: ";
+        cin >> drivinglicense;
+    }
+
+    void displaystuddata() const {
+        cout << "Student address: " << address << endl;
+        cout << "Student's telephone no.: " << telno << endl;
+        cout << "Student's driv lic no : " << drivinglicense << endl;
+    }
+};
+
+
+void student::getdata(studdata* st) {
+    cout << "Enter student's name: ";
+    cin.ignore();  
+    getline(cin, name);
+    cout << "Enter roll no. of student: ";
+    cin >> roll_no;
+    cin.ignore();
+    cout << "Enter the class of student: ";
+    getline(cin, Class);
+    cout << "Enter the division of student: ";
+    getline(cin, div);
+    cout << "Enter DOB of student (dd/mm/yyyy): ";
+    getline(cin, dob);
+    cout << "Enter the blood group of student: ";
+    getline(cin, bloodgroup);
+
+    
+    st->getstuddata();
+
+    
+    count++;
+}
+
+void student::displaydata(studdata* st1) {
+    cout << "\nName of student: " << name;
+    cout << "\nRoll no. of student: " << roll_no;
+    cout << "\nClass of student: " << Class;
+    cout << "\nDivision of student: " << div;
+    cout << "\nDate of birth of student: " << dob;
+    cout << "\nBlood group of student: " << bloodgroup << endl;
+
+    
+    st1->displaystuddata();
+}
+
+int main() {
+    vector<student*> stud1;  
+    vector<studdata*> stud2;
+    char ch;
+
+    do {
+        
+        student* s = new student;
+        studdata* d = new studdata;
+
+        
+        cout << ".........ENTER STUDENT DATA.............." << endl;
+        s->getdata(d);
+
+      
+        stud1.push_back(s);
+        stud2.push_back(d);
+
+        
+        cout << "Do you want to add another student? (y/n): ";
+        cin >> ch;
+
+    } while (ch == 'y' || ch == 'Y');
+
+   
+    for (size_t i = 0; i < stud1.size(); ++i) {
+        cout << ".............STUDENT DATABASE............." << endl;
+        stud1[i]->displaydata(stud2[i]);
+    }
+
+    cout << "..........................." << endl;
+    cout << "Total students: " << student::getcount() << endl;
+
+    
+    for (size_t i = 0; i < stud1.size(); ++i) {
+        delete stud1[i];
+        delete stud2[i];
+    }
+
+    return 0;
+}
