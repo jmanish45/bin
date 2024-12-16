@@ -1,0 +1,37 @@
+#include<iostream>
+#include<fstream>
+#include<string>
+using namespace std;
+int main() {
+    string filename = "example.txt";
+    string writedata = "Hello world this is a sample text file ";
+    string readata ;
+    ofstream fout;
+    fout.open(filename);
+    if (fout.is_open()) {
+        cout<<"writing data to a file  :";
+        fout<<writedata;
+        fout.close();
+
+    }
+    else {
+        cout<<"Error opening file"<<endl;
+
+
+    }
+    ifstream fin;
+    fin.open(filename);
+    if(fin.is_open()){
+        cout<<"\nReading data fromm a file : \n";
+        while (getline(fin,readata)) {
+            cout<< readata<<endl;
+        }
+    
+    fin.close();
+    }
+    else {
+        cout<<"Error opening file"<<endl;
+    }
+    return 0;
+
+}
