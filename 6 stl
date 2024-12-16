@@ -1,0 +1,100 @@
+#include <iostream>
+#include <algorithm>
+#include <vector>
+using namespace std;
+
+class item {
+public:
+    char name[20];
+    int qty;
+    float cost;
+    int code;
+    bool operator==(const item& i1) const {
+        return code == i1.code;
+    }
+    bool operator<(const item& i1) const {
+        return code < i1.code;
+    }
+};
+vector<item> v1;
+void print(const item& i1) {
+    cout << "Name : " << i1.name << endl;
+    cout << "Quantity : " << i1.qty << endl;
+    cout << "Cost : " << i1.cost << endl;
+    cout << "Code : " << i1.code << endl;
+}
+void insert() {
+    item i1;
+    cout << "Enter name of item : ";
+    cin >> i1.name;
+    cout << "Enter qty : ";
+    cin >> i1.qty;
+    cout << "Enter the cost : ";
+    cin >> i1.cost;
+    cout << "Enter the code : ";
+    cin >> i1.code;
+    v1.push_back(i1);
+    
+}
+void search() {
+    int code;
+    cout << "Enter the code to search : ";
+    cin >> code;
+    item temp;
+    temp.code = code;
+    vector<item> :: iterator it;
+    it = find(v1.begin(), v1.end(), temp);
+    if (it != v1.end()) {
+        cout << "Item found:" << endl;
+        print(*it);
+    } else {
+        cout << "Item not found." << endl;
+    }
+}
+void display() {
+    if (v1.empty()) {
+        cout << "No items to display." << endl;
+        return;
+    }
+    cout << "Displaying all items:" << endl;
+    for_each(v1.begin(), v1.end(), print);
+}
+bool compare(const item& i1, const item& i2) {
+    return i1.cost < i2.cost;
+}
+
+int main() {
+    int choice;
+    while (true) {
+        cout << "\n..........MENU.........." << endl;
+        cout << "1. Insert an item" << endl;
+        cout << "2. Search for an item" << endl;
+        cout << "3. Display all items" << endl;
+        cout << "4. Sort items by cost" << endl;
+        cout << "5. Exit" << endl;
+        cout << "Enter your choice : ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                insert();
+                break;
+            case 2:
+                search();
+                break;
+            case 3:
+                display();
+                break;
+            case 4:
+                sort(v1.begin(), v1.end(), compare);
+                cout << "Items sorted by cost:" << endl;
+                display();
+                break;
+            case 5:
+                cout << "Exiting program." << endl;
+                return 0;
+            default:
+                cout << "Invalid choice." << endl;
+        }
+    }
+}
