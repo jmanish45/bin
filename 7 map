@@ -1,0 +1,27 @@
+#include<iostream>
+#include<string>
+#include<map>
+using namespace std;
+int main() {
+    map<string, int> statepopulation;
+    statepopulation["Maharashtra"] = 112372972;
+    statepopulation["Rajasthan"] = 68548437;
+    statepopulation["Punjab"] = 27743338;
+    statepopulation["Kerala"] = 33406061;
+    statepopulation["Goa"] = 1586250;
+    statepopulation["Gujarat"] = 60439692;
+    string state;
+    cout<<"Enter state name : ";
+    //cin.ignore();
+    //getline(cin,state);
+    cin>>state;
+    map<string,int> :: iterator it ;
+    it = statepopulation.find(state);
+    if(it!=statepopulation.end()) {
+        cout<<"Statepopulation of "<<state<<" is "<<it->second<<endl;
+    }
+    else {
+        cout<<"State not found"<<endl;
+    }
+    return 0;
+}
