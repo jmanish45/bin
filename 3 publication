@@ -1,0 +1,108 @@
+#include<iostream>
+#include<string>
+#include<exception>
+using namespace std;
+class Publication {
+    string title;
+    float price;
+    public:
+    Publication() {
+        title = "";
+        price = 0.0f;
+
+    }
+    void getdata() {
+        try {
+        cin.ignore();
+        cout<<"Enter title : ";
+        getline(cin,title);
+        cout<<"Enter price : ";
+        cin>>price;
+        if(cin.fail() || price < 0) {
+            throw "invalid input";
+        }
+        }
+        catch(const char *msg) {
+            cout<<msg<<endl;
+            title = "";
+            price = 0.0f;
+            cin.clear();
+            cin.ignore(1000, '\n');
+        }
+    }
+    void putdata() {
+        cout<<"Title : "<<title<<endl;
+        cout<<"Price : "<<price<<endl;
+    }
+
+};
+class Book : public Publication {
+    int pagecount;
+    public:
+    Book() {
+        pagecount = 0;
+    }
+    void getdata() {
+        try{
+        Publication::getdata();
+        cout<<"Enter page count : ";
+        cin>>pagecount;
+        if(cin.fail() || pagecount < 0) {
+            throw "invalid input of page count";
+        }
+        }
+        catch(const char *msg) {
+            cout<<msg<<endl;
+            pagecount = 0;
+            cin.clear();
+            cin.ignore(1000, '\n');
+        }    
+    }
+    void putdata() {
+        Publication :: putdata() ;
+        cout<<"Page count : "<<pagecount<<endl;
+
+    }
+};
+class Tape : public Publication {
+    float playtime;
+    public:
+    Tape() {
+        playtime = 0.0f;
+    }
+    void getdata() {
+        try {
+        Publication :: getdata();
+        cout<<"Enter play time : ";
+        cin>>playtime;
+        if(cin.fail() || playtime < 0) {
+            throw "invalid input of play time";
+        }
+        }
+        catch(const char *msg) {
+            cout<<msg<<endl;
+            playtime = 0.0f;
+            cin.clear();
+            cin.ignore(1000, '\n');
+    }
+    }
+    void putdata() {
+        Publication :: putdata() ;
+        cout<<"Play time :"<<playtime<<endl;
+    }   
+};
+int main() {
+    Book b;
+    Tape t;
+    cout<<"Enter details of book :"<<endl;
+    b.getdata();
+    cout<<"Enter details of tape : "<<endl;
+    t.getdata() ;
+    cout<<"Detils of book :"<<endl;
+    b.putdata();
+    cout<<"Detail of tape :"<<endl;
+    t.putdata();
+    return 0;
+
+
+}
